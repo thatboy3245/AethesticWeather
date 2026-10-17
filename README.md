@@ -1,85 +1,61 @@
-<div align="center">
+# AethesticWeather
 
-# 🌸 AethesticWeather
+A cozy, pink Rainmeter weather widget for Windows. It supports personal weather stations through Tempest and public forecasts from the National Weather Service (NWS).
 
-**A cute, cozy weather widget for Rainmeter.**
-<br>
-Features a handwritten style and supports **Tempest** and **NWS** data sources.
+## Features
 
-<p>
-  <a href="https://github.com/thatboy3245/AethesticWeather/releases">
-    <img src="https://img.shields.io/github/v/release/thatboy3245/AethesticWeather?style=for-the-badge&color=FFC8DD&labelColor=black" alt="Version">
-  </a>
-  <a href="https://github.com/thatboy3245/AethesticWeather/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/thatboy3245/AethesticWeather?style=for-the-badge&color=white&labelColor=black" alt="License">
-  </a>
-  <img src="https://img.shields.io/github/downloads/thatboy3245/AethesticWeather/total?style=for-the-badge&color=FFC8DD&labelColor=black" alt="Downloads">
-</p>
+- Tempest observations and NWS forecasts, with location and source configured in a small settings window.
+- A compact widget showing temperature, conditions, humidity, wind, and feels-like temperature when available.
+- Original weather icons, with SVG source artwork and bundled PNGs for Rainmeter's native image meter.
+- A daily GitHub release check with a Windows notification when a newer release is available.
+- Settings and API credentials stored locally in `%APPDATA%\AethesticWeather\settings.json`.
 
-<img src="https://via.placeholder.com/800x400/FFC8DD/ffffff?text=UPLOAD+YOUR+PINKWEATHER+SCREENSHOT+HERE" alt="AethesticWeather Preview" width="100%" style="border-radius: 10px;" />
+The settings file is not encrypted. Keep it private if it contains a Tempest API key.
 
-<br>
+## Requirements
 
-[**⬇️ Download Latest Version (.rmskin)**](https://github.com/thatboy3245/AethesticWeather/releases/latest)
+- Windows 10 or later.
+- Rainmeter 4.5 or later.
+- Windows PowerShell 5.1 (included with Windows).
 
-</div>
+## Install
 
----
+Download the latest `.rmskin` from [GitHub Releases](https://github.com/thatboy3245/AethesticWeather/releases), open it, and install the skin. In Rainmeter, load `AethesticWeather\AethesticWeather`. Right-click the widget and choose **Open Settings** to configure it.
 
-## 🔔 Important Notices
+To build an installer from a source checkout, run this from the repository root in PowerShell:
 
-> [!NOTE]
-> **🚧 Website Under Construction:**
-> The official website (**aldenian.us**) is currently in **BETA**. Some pages may be incomplete or link back to this repository. For the latest stable downloads, please use the **Releases** tab here on GitHub.
+```powershell
+.\build\Build-Rmskin.ps1
+```
 
-> [!WARNING]
-> **Font & Aesthetic Warning:**
-> This skin requires the **Cavolini** font for the intended handwritten look. Users **MUST** have a Microsoft 365 subscription to legally obtain and install this font on their system. If the font is not installed, the skin will gracefully fallback to Patrick Hand or Comic Sans MS.
+The installer is written to `dist\AethesticWeather-1.0.0.rmskin`. The build regenerates the bundled PNG icons with Windows' built-in drawing libraries; the original SVG artwork is also included. It writes Rainmeter's required package metadata and footer so the Skin Installer recognizes the file.
 
----
+## Configure a weather source
 
-## ✨ Features
+Open **Settings** from the widget's right-click menu.
 
-* **🎨 Custom Aesthetics:** Uses a soft pink palette (`#FFC8DD`) for a cozy desktop feel.
-* **📡 Dual-Source API:** Supports personal weather data via **Tempest** and public data via **NWS**.
-* **🔔 Native Windows 11 Toasts:** Triggers real system notifications when a new version is available.
-* **⚙️ No File Editing:** All API keys and settings are configured via the graphical **Settings Menu** (Right-Click > Open Settings).
-* **🖼️ High-Quality Icons:** Utilizes crisp **SVG icons** (Meteocons).
+### NWS
 
----
+1. Select **NWS**.
+2. Enter a city name and decimal latitude and longitude.
+3. Enter a contact email address or URL in **NWS User-Agent**. The NWS API requires clients to identify themselves.
+4. Click **Find** to resolve and save the permanent NWS forecast URL and grid location.
+5. Click **Save**. The widget fetches the current NWS forecast period and refreshes every 15 minutes.
 
-## 🚀 Installation
+### Tempest
 
-1.  **Download Rainmeter:** Ensure you have the latest version of [Rainmeter](https://www.rainmeter.net/).
-2.  **Download the Skin:** Get the latest `.rmskin` file from the [Releases Page](https://github.com/thatboy3245/AethesticWeather/releases).
-3.  **Install:** Double-click the file and click **"Install"**.
+1. Select **Tempest**.
+2. Enter a city name, Tempest API key, device ID, and station ID from your WeatherFlow/Tempest account.
+3. Click **Save**. The widget fetches station observations and refreshes every 15 minutes.
 
-## 🛠️ API Setup Instructions
+If a request fails, its error is shown in the widget's status line. Use **Refresh Weather** from the right-click menu to retry.
 
-### Tempest Users (Personal Weather Station)
-1.  Right-click the widget and select **Open Settings**.
-2.  In the GUI, select **Tempest**.
-3.  Enter your **API Key**, **Device ID**, and **Station ID** (from tempestwx.com).
-4.  Enter your **City Name** (for display only).
+## Updates and development
 
-### NWS Users (National Weather Service)
-1.  Right-click the widget and select **Open Settings**.
-2.  In the GUI, select **NWS**.
-3.  **Find Coordinates:** Use a tool like `latlong.net` to find the exact **Latitude** and **Longitude** for your location.
-4.  **Enter Coordinates:** Input the decimal coordinates into the **Latitude** and **Longitude** fields in the settings menu.
-5.  Click the **"Fetch NWS Data"** button to locate the permanent NWS Grid URL for your location. The widget will then start displaying data.
+The skin checks the GitHub Releases API once a day. Notifications appear only after a newer stable release has been published. Network access is needed for weather requests and update checks.
 
----
+Source files are in `AethesticWeather\`; the `.rmskin` build script is in `build\`. The SVG icons are original project artwork. Rainmeter's native image meter does not support SVG, so the installed skin uses the bundled PNG icons.
 
-## 📜 Credits & License
+## License
 
-* **Icons:** [Meteocons](https://github.com/basmilius/weather-icons) by Bas Milius (MIT License).
-* **Development Assistance:** Google Gemini AI.
-* **Platform:** [Rainmeter](https://www.rainmeter.net/).
-
-Distributed under the **MIT License**. See `LICENSE` for more information.
-
-<div align="center">
-  <br>
-  <sub>Made with 💖 by Alden Graham</sub>
-</div>
+The project is distributed under the MIT License. See [LICENSE](LICENSE).
